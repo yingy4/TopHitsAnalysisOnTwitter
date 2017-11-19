@@ -1,0 +1,5 @@
+package Ingest
+
+class Tweet {
+
+}
