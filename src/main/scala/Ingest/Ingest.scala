@@ -3,8 +3,8 @@ package Ingest
 import scala.io.Source
 import scala.util.Try
 
-class Ingest[T: Ingestible] extends (){
-
+class Ingest[T: Ingestible] extends (Source => Iterator[Try[T]]){
+  override def apply(source: Source): Iterator[Try[T]] = source.getLines().toSeq.map(e => implicitly[Ingestible[T]].fromString(e)).iterator
 }
 
 trait Ingestible[X] {
