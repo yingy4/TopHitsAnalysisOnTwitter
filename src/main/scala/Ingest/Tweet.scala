@@ -7,9 +7,9 @@ class Tweet {
 
   case class Tweet(text: String, lang: String, created_at: String, retweet_count: Int, user: User, entities: Entities)
 
-  case class User(id: Int, favourities_count: Int, location: String, name: String)
+  case class User(id: Int, favourites_count: Int, location: String, name: String)
 
-  case class Entities(hashTags: List[HashTag])
+  case class Entities(hashtags: List[HashTag])
 
   case class HashTag(text: String)
 
