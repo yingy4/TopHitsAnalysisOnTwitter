@@ -37,3 +37,4 @@ libraryDependencies += "org.scalamock" %% "scalamock-scalatest-support" % "3.5.0
 
 libraryDependencies += "com.github.nscala-time" %% "nscala-time" % "2.16.0"
         
+libraryDependencies += "edu.stanford.nlp" % "stanford-corenlp" % "3.3.1" artifacts (Artifact("stanford-corenlp", "models"), Artifact("stanford-corenlp"))
