@@ -36,7 +36,8 @@ object InferenceTopics {
 
 
   def normalizedTopicsMatrix(ldaModel: LDAModel): Array[Array[Double]] = {
-    val topics = ldaModel.describeTopics()
+    val topics = ldaModel.describeTopics(32)
+    println("Topics : "+topics(0)._1.length)
     val topicsMatrix = new Array[Array[Double]](ldaModel.k)
     //println(ldaModel.k)
     val rangeT = 0 until ldaModel.k
