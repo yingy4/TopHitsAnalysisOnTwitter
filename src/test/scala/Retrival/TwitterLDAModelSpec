@@ -1,0 +1,44 @@
+package Rtrivial
+
+import Retrival.TwitterLDAModel
+import org.scalatest.{FlatSpec, Matchers}
+
+import scala.io.{Codec, Source}
+import scala.util._
+import Retrival.TwitterLDAModel._
+import Retrival.InferenceTopics._
+import org.apache.spark.SparkContext
+
+class TwitterLDAModelSpec extends FlatSpec with Matchers{
+
+  val sc = new SparkContext("local[*]", "Topics")
+  val model = TwitterLDAModel.generateLDAModel(sc)
+  val volArray = model._2
+  val ldaModel = model._1
+  behavior of "create lda model"
+
+  it should "match the size" in {
+    model._2.size shouldBe 11141
+    model._1.k shouldBe 3
+  }
+
+  it should "classify tweets into Trump" in {
+    val str1 = "Trump is a good president"
+    val vector1 = str1.trim().split(" ").map(word => if (volArray.indexOf(word) > 31 || volArray.indexOf(word) < 0) 31 else volArray.indexOf(word)).mkString(" ")
+    val results1 = inferenceTopic(ldaModel, vector1)
+    results1.size shouldBe 3
+
+    val str2 = "Spider man is a great movie"
+    val vector2 = str2.trim().split(" ").map(word => if (volArray.indexOf(word) > 31 || volArray.indexOf(word) < 0) 31 else volArray.indexOf(word)).mkString(" ")
+    val results2 = inferenceTopic(ldaModel, vector2)
+    results2.length shouldBe 3
+
+    val str3 = "football is popular in America"
+    val vector3 = str3.trim().split(" ").map(word => if (volArray.indexOf(word) > 31 || volArray.indexOf(word) < 0) 31 else volArray.indexOf(word)).mkString(" ")
+    val results3 = inferenceTopic(ldaModel, vector3)
+    results3.length shouldBe 3
+
+    results1.indexOf(results1.max)+results2.indexOf(results2.max)+results3.indexOf(results3.max) shouldBe 6
+  }
+
+}
