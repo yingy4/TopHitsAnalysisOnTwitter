@@ -3,8 +3,6 @@ package Ingest
 import spray.json.DefaultJsonProtocol
 import scala.util._
 
-class Tweet {
-
   case class Tweet(text: String, lang: String, created_at: String, retweet_count: Int, user: User, entities: Entities)
 
   case class User(id: Int, favourites_count: Int, location: String, name: String)
@@ -17,6 +15,10 @@ class Tweet {
 
   case class Metadata(count: Int)
 
+  //case class User(id: Int, favourities_count: Int, location: String, name: String)
+
+
+
   object TweetProtocol extends DefaultJsonProtocol {
     implicit val formatUser = jsonFormat4(User.apply)
     implicit val formatHashTag = jsonFormat1(HashTag.apply)
@@ -25,13 +27,13 @@ class Tweet {
     implicit val formatTweet = jsonFormat6(Tweet.apply)
     implicit val formatResponse = jsonFormat2(Response.apply)
   }
-  
+
   object Response {
     import spray.json._
 
     trait IngestibleResponse extends Ingestible[Response] {
-      override def fromString(w: String): Try[Response] = {
-        println("w=" + w.parseJson.prettyPrint)
+      def fromString(w: String): Try[Response] = {
+        //println("w=" + w.parseJson.prettyPrint)
         import TweetProtocol._
         Try(w.parseJson.convertTo[Response])
       }
@@ -43,8 +45,8 @@ class Tweet {
     import spray.json._
 
     trait IngestibleTweet extends Ingestible[Tweet] {
-      override def fromString(w: String): Try[Tweet] = {
-        println("w=" + w.parseJson.prettyPrint)
+      def fromString(w: String): Try[Tweet] = {
+        //println("w=" + w.parseJson.prettyPrint)
         import TweetProtocol._
         Try(w.parseJson.convertTo[Tweet])
       }
@@ -52,4 +54,5 @@ class Tweet {
     implicit object IngestibleTweet extends IngestibleTweet
   }
 
-}
+
+
