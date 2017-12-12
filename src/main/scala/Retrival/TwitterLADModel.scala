@@ -15,8 +15,9 @@ object TwitterLDAModel {
     val data = sc.textFile("text-tweets.txt")
     //CountVectorizer cv = new CountVectorizer().setInputCol("")
     val volArrayOriginal = data.flatMap(_.trim().split(" ")).map((_, 1)).reduceByKey(_ + _).map { case (topic, count) => (count, topic) }.sortByKey(false).map(_._2).collect()
-    val volArray = volArrayOriginal.filter(s => !TwitterClient.stopWords.contains(s.toLowerCase))
-    val vectors = data.map(s => Vectors.dense(s.trim().split(" ").map(word => if (volArray.indexOf(word).toDouble > 31 || volArray.indexOf(word).toDouble < 0) 31 else volArray.indexOf(word).toDouble)))
+    val volArray = volArrayOriginal.filter(!_.startsWith("https")).filter(word => !TwitterClient.stopWords.contains(word.toLowerCase)).filter(_.toLowerCase().matches("[A-Za-z]+"))
+    //val vectors = data.map(s => Vectors.dense(s.trim().split(" ").map(word => if (volArray.indexOf(word).toDouble > 31 || volArray.indexOf(word).toDouble < 0) 31 else volArray.indexOf(word).toDouble)))
+    val vectors = data.map(s => Vectors.dense(s.trim().split(" ").map(word => volArray.indexOf(word).toDouble).filter(index => index <32 && index >=0)))
     //println("Size : "+vectors.collect().size)
     //parseData.collect()
     var index = 0
@@ -29,23 +30,6 @@ object TwitterLDAModel {
     val corpus = vectors.zipWithIndex.map(_.swap).cache()
 
     val ldaModel = new LDA().setK(3).run(corpus)
-
-    val topics = ldaModel.describeTopics(20)
-    for (k <- Range(0, 3)) {
-      print("Topic " + k + ": ")
-      for (w <- Range(0, 20)) {
-        print("%d=%.5f ".format(topics(k)._1(w), topics(k)._2(w)))
-      }
-      println()
-    }
-
-//    val str = "Trump is a good president"
-//    val vector = str.trim().split(" ").map(word => if (volArray.indexOf(word) > 31 || volArray.indexOf(word) < 0) 31 else volArray.indexOf(word)).mkString(" ")
-//    println(vector)
-//    val results = InferenceTopics.inferenceTopic(ldaModel, vector)
-//    for (result <- results) {
-//      println(result + " ")
-//    }
     Tuple2(ldaModel,volArray)
   }
 
