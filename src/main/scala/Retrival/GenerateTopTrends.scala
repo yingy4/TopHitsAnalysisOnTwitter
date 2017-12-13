@@ -21,16 +21,15 @@ object GenerateTopTrends{
 
             val topicsLabel = Array(" ", "Football", "Movie", "Trump")
             val sc = new SparkContext("local[*]", "Topics")
-            //  val ssc = new StreamingContext(sc, Seconds(5))
-
             val ssc = new StreamingContext(sc, Seconds(10))
 
-            val keywords = args.mkString(" ")
+            println("Please input the keywords or just hit enter button...")
+            val keys = Console.readLine()
+            val keywords = if (keys.isEmpty) Array[String]() else keys.split(" ")
             val tweets = keywords.size match {
                   case 0 => TwitterUtils.createStream(ssc, None, Seq("Trump", "Movie", "Football"))
-                  case _ => TwitterUtils.createStream(ssc, None, Seq("Trump", "Movie", "Football")++args.toSeq)
+                  case _ => TwitterUtils.createStream(ssc, None, keywords.toSeq)
             }
-            //val tweets = TwitterUtils.createStream(ssc, None, Seq("Trump", "Movie", "Football"))
             val texts = tweets.filter(status => status.getLang == "en").map(status => status.getText().toLowerCase()).cache()
 
             //      val lda_vol = TwitterLDAModel.generateLDAModel(sc)
@@ -38,16 +37,6 @@ object GenerateTopTrends{
             val topicsMatrix = InferenceTopics.loadTopicsMatrix()
             val volArray = InferenceTopics.loadVocabulary()
 
-            /* write vovabulary into file
-            val vol = volArray.filter(!_.startsWith("https")).filter(!TwitterClient.stopWords.contains(_)).filter(_.matches("[A-Za-z]+"))
-            val pw = new FileWriter(new File("vocabulary_test.txt"),true)
-            for(word <- lda_vol._2){
-                  pw.append(word).write(" ")
-            }
-            pw.flush()
-            pw.close()
-            println(lda_vol._2.size)
-            */
             val sentiments = texts.map(text => (text, AnalyzeSentiment.calculateSentiment(text) match {
                   case SentimentType.Negative => 0
                   case SentimentType.Neutural => 1
@@ -70,14 +59,6 @@ object GenerateTopTrends{
             val results = tops.print()
             ssc.start()
             ssc.awaitTermination()
-            /* test
-              val str = "Trump"
-              val vector = str.trim().split(" ").map(word => volArray.indexOf(word)).filter(index => index <5 && index >=0).mkString(" ")
-              val arr = InferenceTopics.inferenceTopic(topicsMatrix, vector)
-              println(arr.indexOf(arr.max))
-              for(dou <- arr){
-                println(dou)
-              }
-            */
+            
       }
 }
