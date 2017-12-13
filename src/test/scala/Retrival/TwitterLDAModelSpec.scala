@@ -68,7 +68,7 @@ class TwitterLDAModelSpec extends FlatSpec with Matchers{
 
   behavior of "test for topic ranking"
 
-  it should "accurancy better than 60% for 28 tweets" in {
+  it should "The accurancy percentage should be above 60% when input 28 tweets" in {
     val vocabulary = InferenceTopics.loadVocabulary()
     val topicsMatrix = InferenceTopics.loadTopicsMatrix()
     val sc = new SparkContext("local[*]", "Topics")
@@ -79,7 +79,9 @@ class TwitterLDAModelSpec extends FlatSpec with Matchers{
 
     rankedTopics(0) shouldBe 2
     rankedTopics(1) shouldBe 1
-    println("For tweets which contain 75% about Trump and 25% about Movie, Trump's trending is higher than Movie")
+    println()
+    println("The tweets we input that are about Trump are more than the tweets about the movie.\n If the topics regarding Trump rank  higher than the topics  regarding Movie, we say the acceptance criteria is met.")
+    println()
   }
 
 
