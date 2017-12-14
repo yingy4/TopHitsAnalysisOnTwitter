@@ -6,7 +6,7 @@ Overview:
 2. Train the LDA topic modeling with this dataset to get a set of pre-defined topics
 3. Wrote program in Scala that it can concurrently acquire tweets that happened in the past 10 seconds
 4. Analyze tweets using Spark techniques and generate essential topics and extract popular hashtags from tweets that are acquired
-5. Calculated sentiment score for each major topic/hashtag, based on the attitude(positive, negative, neutral) of each tweet associated with the topic/hashtag
+5. Calculate sentiment score for each major topic/hashtag, based on the attitude(positive, negative, neutral) of each tweet associated with the topic/hashtag
 6. Output trending topics and popular hashtags with their sentiment scores
 
 
