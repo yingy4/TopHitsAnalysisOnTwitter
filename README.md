@@ -35,12 +35,15 @@ If the user inputs nothing or enters the return button, the topics/hashtags prog
 ### Acceptance Criteria (The screenshot is included in the final ppt）
 
 Acceptance Criteria 1: The LDA model should correctly extract/generate topics from tweets. The expected accuracy rate should be above 60 percent.
+
 Explanation: We manually input 20 tweets that are about Trump. Our LDA model can identify 16 of them are about Trump, which is 80% accuracy rate. Therefore, this Acceptance Criteria is met  
 
 Acceptance Criteria 2: Test Ranking Feature
+
 Explanation: We input a tweet set contains 75% tweets related to Trump and 25% tweets related to Movie. Our LDA model can calculate the number of tweets for each topic and rank them. The result shows Trump is the 1st and Movie is the 2nd. Therefore, this Acceptance Criteria is met  
 
 Acceptance Criteria 3: Sentiment analysis feature can correctly identify the attitude(Postive, Neutral, Negative) of the tweets
+
 Explanation: we wrote thirty tweets in SentimentAnalysisSpec class and we provided correct attitude for each tweet to determine whether it passes the criteria or not.
 The result is all 30 tests passed which is 100% accuracy. This criterion is met
 
