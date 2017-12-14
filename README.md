@@ -27,7 +27,7 @@ Stanford NLP                             =>          Calculating Sentiment
 
 ### USE CASE
 
-A user can input a keyword or just enter the return button. 
+A user can input keywords or just enter the return button. 
 If user input a keyword, such as sports, the program concurrently acquire real-time tweets that happened in the past 10 seconds and generate trending topics as well as popular hashtags
 from these tweets. Then, it calculates a sentiment score for each topic/hashtag regarding the keyword, sports.
 If the user inputs nothing or enters the return button, the topics/hashtags program generates/extracts are generic trending topics and popular hashtags that are not related to any specific keywords.
