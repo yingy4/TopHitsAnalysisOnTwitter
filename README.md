@@ -3,8 +3,8 @@
 We implemented a scala project that can analyze trending topics and calculate sentiment scores with these topics on tweets that we acquired via Twitter Restful API.
 Overview:
 1. Collect the dataset, 100,000 tweets, via Twitter Search API
-2. Trained the LDA topic modeling with this dataset to get a set of pre-processed topics
-3. Wrote program in Scala that it can concurrently acquire tweets that happened in the past (1-60) seconds
+2. Train the LDA topic modeling with this dataset to get a set of pre-defined topics
+3. Wrote program in Scala that it can concurrently acquire tweets that happened in the past 10 seconds
 4. Analyze tweets using Spark techniques and generate essential topics and extract popular hashtags from tweets that are acquired
 5. Calculated sentiment score for each major topic/hashtag, based on the attitude(positive, negative, neutral) of each tweet associated with the topic/hashtag
 6. Output trending topics and popular hashtags with their sentiment scores
@@ -23,7 +23,7 @@ Stanford NLP                             =>          Calculating Sentiment
 ### USE CASE
 
 A user can input a keyword or just enter the return button. 
-If user input a keyword, such as sports, the program concurrently acquire real-time tweets that happened in the past 10(1-60) seconds and generate trending topics as well as popular hashtags
+If user input a keyword, such as sports, the program concurrently acquire real-time tweets that happened in the past 10 seconds and generate trending topics as well as popular hashtags
 from these tweets. Then, it calculates a sentiment score for each topic/hashtag regarding the keyword, sports.
 If the user inputs nothing or enters the return button, the topics/hashtags program generate/extract are generic trending topics and popular hashtags that are not related to any specific keywords.
 
