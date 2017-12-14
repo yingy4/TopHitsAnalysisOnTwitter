@@ -27,6 +27,8 @@ Stanford NLP                             =>          Calculating Sentiment
 
 ### USE CASE
 
+Run "GenerateTopTrend.scala"
+
 A user can input keywords or just enter the return button. 
 If user input a keyword, such as sports, the program concurrently acquire real-time tweets that happened in the past 10 seconds and generate trending topics as well as popular hashtags
 from these tweets. Then, it calculates a sentiment score for each topic/hashtag regarding the keyword, sports.
