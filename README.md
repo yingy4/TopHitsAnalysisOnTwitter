@@ -13,10 +13,15 @@ Overview:
 
 ## Methodology
 Search & Streaming API                   =>          Acquiring Tweets
+
 JSON Format Transformation               =>          Parsing Twitter Sources
+
 Tweets Text Filter                       =>          Filtering Language, Emoji, Stop Words
+
 Topic Model Training                     =>          Training LDA Model    
+
 Spark Streaming                          =>          Reading Tweets and ranking topics(Mapping & Reducing)
+
 Stanford NLP                             =>          Calculating Sentiment
 
 
